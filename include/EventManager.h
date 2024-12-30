@@ -22,7 +22,8 @@ public:
     struct Event {
         TimeUtil time;
         EventType id;
-        std::string data;
+        std::string clientName;
+        unsigned int tableID;
     };
 
     using EventHandler = std::function<void(const Event&)>;

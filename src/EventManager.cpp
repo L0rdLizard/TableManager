@@ -8,7 +8,6 @@ EventManager::EventManager(TableManager& tableManager, ClientManager& clientMana
     tableManager(tableManager), clientManager(clientManager) {}
 
 bool EventManager::loadEvents(const std::string& filePath) {
-    // Load events from the file:
     std::ifstream file(filePath);
     if (!file.is_open()) {
         std::cerr << "Failed to open file: " << filePath << std::endl;
@@ -24,12 +23,12 @@ bool EventManager::loadEvents(const std::string& filePath) {
             tokens.push_back(token);
         }
 
-        if (tokens.size() != 3) {
+        if (tokens.size() < 3 || tokens.size() > 4) {
             std::cerr << "Invalid event format: " << line << std::endl;
             return false;
         }
 
-        EventType eventType;
+        events.push_back({TimeUtil(tokens[0]), static_cast<EventType>(std::stoi(tokens[1])), tokens[2]});
     }
     return true;
 }
