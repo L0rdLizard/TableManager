@@ -60,4 +60,3 @@ TimeUtil TimeUtil::operator-(const TimeUtil& other) const {
 
     return TimeUtil(newHour, newMinute);
 }
-

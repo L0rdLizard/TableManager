@@ -22,6 +22,8 @@ public:
     bool operator>=(const TimeUtil& other) const { return !(*this < other); }
     bool operator==(const TimeUtil& other) const { return !(*this < other) && !(other < *this); }
     bool operator!=(const TimeUtil& other) const { return !(*this == other); }
+
+    ~TimeUtil();
 };
 
 #endif
