@@ -3,9 +3,14 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <stdexcept>
 
 EventManager::EventManager(TableManager& tableManager, ClientManager& clientManager) :
     tableManager(tableManager), clientManager(clientManager) {}
+
+bool isValidEventType(int id) {
+    return (id >= 1 && id <= 4) || id == 11 || id == 12 || id == 13;
+}
 
 bool EventManager::loadEvents(const std::string& filePath) {
     std::ifstream file(filePath);
@@ -24,11 +29,17 @@ bool EventManager::loadEvents(const std::string& filePath) {
         }
 
         if (tokens.size() < 3 || tokens.size() > 4) {
-            std::cerr << "Invalid event format: " << line << std::endl;
-            return false;
+            throw std::runtime_error("Invalid event format: " + line);
         }
 
-        events.push_back({TimeUtil(tokens[0]), static_cast<EventType>(std::stoi(tokens[1])), tokens[2]});
+        TimeUtil time(tokens[0]);
+        
+        int event_id = std::stoi(tokens[1]);
+        if (!isValidEventType(event_id)) {
+            throw std::runtime_error("Invalid event format: " + line);
+        }
+
+        events.push_back({time, static_cast<EventType>(event_id), tokens[2]});
     }
     return true;
 }
