@@ -55,9 +55,6 @@ void EventManager::registerEventHandlers() {
     eventHandlers[EventType::CLIENT_SEAT] = [this](const Event& event) { handleClientSeat(event); };
     eventHandlers[EventType::CLIENT_WAIT] = [this](const Event& event) { handleClientWait(event); };
     eventHandlers[EventType::CLIENT_LEAVE] = [this](const Event& event) { handleClientLeave(event); };
-    eventHandlers[EventType::CLIENT_LEAVE_FINAL] = [this](const Event& event) { handleClientLeaveFinal(event); };
-    eventHandlers[EventType::CLIENT_SEAT_FIRST] = [this](const Event& event) { handleClientSeatFirst(event); };
-    eventHandlers[EventType::ERROR] = [this](const Event& event) { handleError(event); };
 }
 
 void EventManager::handleEvent(const Event& event) {
