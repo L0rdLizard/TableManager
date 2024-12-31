@@ -5,8 +5,7 @@
 #include <vector>
 #include <stdexcept>
 
-EventManager::EventManager(TableManager& tableManager, ClientManager& clientManager) :
-    tableManager(tableManager), clientManager(clientManager) {}
+EventManager::EventManager(TableManager& tableManager) : tableManager(tableManager) {}
 
 bool isValidEventType(int id) {
     return (id >= 1 && id <= 4) || id == 11 || id == 12 || id == 13;
@@ -29,17 +28,24 @@ bool EventManager::loadEvents(const std::string& filePath) {
         }
 
         if (tokens.size() < 3 || tokens.size() > 4) {
-            throw std::runtime_error("Invalid event format: " + line);
+            std::cerr << "Invalid event format: " << line << std::endl;
+            std::exit(1);
         }
 
-        TimeUtil time(tokens[0]);
-        
-        int event_id = std::stoi(tokens[1]);
-        if (!isValidEventType(event_id)) {
-            throw std::runtime_error("Invalid event format: " + line);
-        }
+        try {
+            TimeUtil time(tokens[0]);
+            int event_id = std::stoi(tokens[1]);
 
-        events.push_back({time, static_cast<EventType>(event_id), tokens[2]});
+            if (!isValidEventType(event_id)) {
+                std::cerr << "Invalid event format: " << line << std::endl;
+                std::exit(1);
+            }
+
+            events.push_back({time, static_cast<EventType>(event_id), tokens[2]});
+        } catch (const std::exception& e) {
+            std::cerr << "Error processing event: " << line << std::endl;
+            std::exit(1);
+        }
     }
     return true;
 }

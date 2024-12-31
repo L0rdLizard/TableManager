@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include "TableManager.h"
-#include "ClientManager.h"
 #include <functional>
 
 enum class EventType { 
@@ -28,7 +27,7 @@ public:
 
     using EventHandler = std::function<void(const Event&)>;
 
-    EventManager(TableManager& tableManager, ClientManager& clientManager);
+    EventManager(TableManager& tableManager);
 
     void registerEventHandlers();
 
@@ -40,7 +39,6 @@ public:
 
 private:
     TableManager& tableManager;
-    ClientManager& clientManager;
     std::unordered_map<EventType, EventHandler> eventHandlers;
     std::vector<Event> events;
     std::vector<Event> eventLog;
