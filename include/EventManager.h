@@ -49,9 +49,6 @@ private:
     void handleClientSeat(const Event& event);
     void handleClientWait(const Event& event);
     void handleClientLeave(const Event& event);
-    void handleClientLeaveFinal(const Event& event);
-    void handleClientSeatFirst(const Event& event);
-    void handleError(const Event& event);
 
     void logEvent(const TimeUtil& time, int id, const std::string& data);
 };
