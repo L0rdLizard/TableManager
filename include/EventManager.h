@@ -5,6 +5,7 @@
 #include <vector>
 #include "TableManager.h"
 #include <functional>
+#include <memory>
 
 enum class EventType { 
     CLIENT_ARRIVAL = 1,
@@ -16,21 +17,22 @@ enum class EventType {
     ERROR = 13
 };
 
+struct Event {
+    TimeUtil time;
+    EventType id;
+    std::string clientName;
+    unsigned int tableID;
+
+    Event(TimeUtil t, EventType et, const std::string& name, unsigned int table = 0)
+        : time(t), id(et), clientName(name), tableID(table) {}
+};
+
 class EventManager {
 public:
-    struct Event {
-        TimeUtil time;
-        EventType id;
-        std::string clientName;
-        unsigned int tableID;
-
-        Event(TimeUtil t, EventType et, const std::string& name, unsigned int table = 0)
-            : time(t), id(et), clientName(name), tableID(table) {}
-    };
-
+    
     using EventHandler = std::function<void(const Event&)>;
 
-    EventManager(TableManager& tableManager);
+    EventManager(const std::string& configFilePath);
 
     void registerEventHandlers();
 
@@ -40,8 +42,11 @@ public:
 
     std::vector<Event> getEventLog() const;
 
+    void printEventLog() const;
+
 private:
-    TableManager& tableManager;
+    // TableManager& tableManager;
+    std::unique_ptr<TableManager> tableManager{nullptr};
     std::unordered_map<EventType, EventHandler> eventHandlers;
     std::vector<Event> events;
     std::vector<Event> eventLog;
