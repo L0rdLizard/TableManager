@@ -23,6 +23,10 @@ public:
     bool operator==(const TimeUtil& other) const { return !(*this < other) && !(other < *this); }
     bool operator!=(const TimeUtil& other) const { return !(*this == other); }
 
+    std::string toString() const;
+
+    friend std::ostream& operator<<(std::ostream& os, const TimeUtil& time);
+
     ~TimeUtil();
 };
 
