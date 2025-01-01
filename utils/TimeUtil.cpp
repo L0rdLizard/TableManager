@@ -1,7 +1,10 @@
-#include "time_util.h"
+#include "TimeUtil.h"
 #include <stdexcept>
 
 TimeUtil::TimeUtil(const std::string& time) {
+    if (time.length() != 5 || time[2] != ':') {
+        throw std::invalid_argument("Invalid time format");
+    }
     std::string hour_str = time.substr(0, 2);
     std::string minute_str = time.substr(3, 2);
 
