@@ -19,6 +19,10 @@ bool EventManager::loadEvents(const std::string& filePath) {
     }
 
     std::string line;
+    for (int i = 0; i < 3; ++i) {
+        std::getline(file, line);
+    }
+
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::string token;
@@ -28,7 +32,7 @@ bool EventManager::loadEvents(const std::string& filePath) {
         }
 
         if (tokens.size() < 3 || tokens.size() > 4) {
-            std::cerr << "Invalid event format: " << line << std::endl;
+            std::cerr << "Invalid event format (incorrect number of tokens): " << std::endl << line << std::endl;
             std::exit(1);
         }
 
@@ -37,13 +41,27 @@ bool EventManager::loadEvents(const std::string& filePath) {
             int event_id = std::stoi(tokens[1]);
 
             if (!isValidEventType(event_id)) {
-                std::cerr << "Invalid event format: " << line << std::endl;
+                std::cerr << "Invalid event format (invalid event type): " << std::endl << line << std::endl;
                 std::exit(1);
             }
 
-            events.push_back({time, static_cast<EventType>(event_id), tokens[2]});
-        } catch (const std::exception& e) {
-            std::cerr << "Error processing event: " << line << std::endl;
+            if (tokens[2].empty()) {
+                std::cerr << "Invalid event format (missing client name): " << std::endl << line << std::endl;
+                std::exit(1);
+            }
+            
+            if (event_id == 2) {
+                int table_id = std::stoi(tokens[3]);
+                events.emplace_back(Event( time, static_cast<EventType>(event_id), tokens[2], table_id ));
+            } else {
+                events.emplace_back(Event( time, static_cast<EventType>(event_id), tokens[2] ));
+            }
+
+        } catch (const std::invalid_argument& e) {
+            std::cerr << "Error processing event: " << std::endl << line << std::endl;
+            std::exit(1);
+        } catch (const std::out_of_range& e) {
+            std::cerr << "Out of range error in event processing: " << std::endl << line << std::endl;
             std::exit(1);
         }
     }

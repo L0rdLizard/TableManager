@@ -23,6 +23,9 @@ public:
         EventType id;
         std::string clientName;
         unsigned int tableID;
+
+        Event(TimeUtil t, EventType et, const std::string& name, unsigned int table = 0)
+            : time(t), id(et), clientName(name), tableID(table) {}
     };
 
     using EventHandler = std::function<void(const Event&)>;
