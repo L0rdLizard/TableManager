@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "TableManager.h"
+#include "ClientManager.h"
 #include <functional>
 #include <memory>
 
@@ -47,6 +48,8 @@ public:
 private:
     // TableManager& tableManager;
     std::unique_ptr<TableManager> tableManager{nullptr};
+    std::unique_ptr<ClientManager> clientManager{nullptr};
+
     std::unordered_map<EventType, EventHandler> eventHandlers;
     std::vector<Event> events;
     std::vector<Event> eventLog;

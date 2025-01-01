@@ -23,6 +23,7 @@ EventManager::EventManager(const std::string& filePath) {
     int hourlyRate = atoi(line.c_str());
 
     tableManager = std::make_unique<TableManager>(tableCount, hourlyRate);
+    clientManager = std::make_unique<ClientManager>();
 }
 
 
@@ -126,4 +127,24 @@ void EventManager::logEvent(const TimeUtil& time, int id, const std::string& dat
 void EventManager::handleClientArrival(const Event& event) {
     tableManager->occupyTable(event.clientName, event.tableID, event.time);
     logEvent(event.time, 1, event.clientName);
+}
+
+void EventManager::handleClientSeat(const Event& event) {
+    tableManager->releaseTable(event.clientName, event.time);
+    clientManager->registerClient(event.clientName, event.time);
+
+    logEvent(event.time, 2, event.clientName);
+}
+
+void EventManager::handleClientWait(const Event& event) {
+    tableManager->addToQueue(event.clientName);
+
+    logEvent(event.time, 3, event.clientName);
+}
+
+void EventManager::handleClientLeave(const Event& event) {
+    tableManager->processQueue(event.tableID, event.time);
+    clientManager->unregisterClient(event.clientName, event.time);
+
+    logEvent(event.time, 4, event.clientName);
 }
