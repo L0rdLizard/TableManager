@@ -14,7 +14,8 @@ public:
         bool isOccupied;
         std::string occupiedBy;
         int revenue;
-        int occupiedMinutes;
+        // int occupiedMinutes;
+        TimeUtil occupiedSince;
     };
 
     TableManager(int tableCount);
@@ -33,6 +34,7 @@ public:
 
 private:
     int tableCount;
+    int hourlyRate;
     std::vector<Table> tables;
     std::queue<std::string> waitingQueue;
     std::unordered_map<std::string, int> clientTableMap;
