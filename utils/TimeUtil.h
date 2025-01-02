@@ -27,6 +27,8 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const TimeUtil& time);
 
+    int getRoundTime() const;
+
     ~TimeUtil();
 };
 

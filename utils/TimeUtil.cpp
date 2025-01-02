@@ -75,4 +75,8 @@ std::ostream& operator<<(std::ostream& os, const TimeUtil& time) {
     return os;
 }
 
+int TimeUtil::getRoundTime() const {
+    return hour + (minute >= 1 ? 1 : 0);
+}
+
 TimeUtil::~TimeUtil() {}
