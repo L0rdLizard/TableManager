@@ -124,6 +124,8 @@ void EventManager::processEvents() {
             logEvent(timeEnd, 11, client);
         }
     }
+
+    tableManager->finalizeDailyReport(timeEnd);
 }
 
 std::vector<EventManager::Event> EventManager::getEventLog() const {
