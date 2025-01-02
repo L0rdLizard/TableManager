@@ -50,6 +50,11 @@ private:
     std::unique_ptr<TableManager> tableManager{nullptr};
     std::unique_ptr<ClientManager> clientManager{nullptr};
 
+    unsigned int tableCount = 0;
+    unsigned int hourlyRate = 0;
+    TimeUtil timeStart = TimeUtil{nullptr};
+    TimeUtil timeEnd = TimeUtil{nullptr};
+
     std::unordered_map<EventType, EventHandler> eventHandlers;
     std::vector<Event> events;
     std::vector<Event> eventLog;
@@ -61,7 +66,7 @@ private:
     void handleClientWait(const Event& event);
     void handleClientLeave(const Event& event);
 
-    void logEvent(const TimeUtil& time, int id, const std::string& data);
+    void logEvent(const TimeUtil& time, int id, const std::string& data, unsigned int table = 0);
 };
 
 #endif
