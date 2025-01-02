@@ -19,6 +19,9 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 
 add_executable(TableManager
     src/main.cpp
+    src/ClientManager.cpp
+    src/TableManager.cpp
+    src/EventManager.cpp
 )
 
 # enable_testing()
