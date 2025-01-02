@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
 #include "TimeUtil.h"
 
 class ClientManager {
@@ -21,9 +22,9 @@ public:
 
     bool isClientInside(const std::string& clientName) const;
 
-    bool registerClient(const std::string& clientName, const TimeUtil& arrivalTime);
+    void registerClient(const std::string& clientName);
 
-    bool unregisterClient(const std::string& clientName, const TimeUtil& departureTime);
+    void unregisterClient(const std::string& clientName, const TimeUtil& departureTime);
 
     void seatClient(const std::string& clientName, unsigned int tableID);
 
