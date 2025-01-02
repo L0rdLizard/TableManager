@@ -15,11 +15,12 @@ public:
         bool isOccupied;
         std::string occupiedBy;
         int revenue;
-        // int occupiedMinutes;
         TimeUtil occupiedSince;
+
+        Table() : id(0), isOccupied(false), occupiedBy(""), revenue(0), occupiedSince(TimeUtil(0, 0)) {}
     };
 
-    TableManager(int tableCount);
+    TableManager(int tableCount, int hourlyRate);
 
     bool occupyTable(const std::string& clientName, int tableId, const TimeUtil& currentTime);
 
@@ -27,7 +28,7 @@ public:
 
     void addToQueue(const std::string& clientName);
 
-    bool processQueue(int tableId, const TimeUtil& currentTime);
+    // bool processQueue(int tableId, const TimeUtil& currentTime);
 
     void finalizeDailyReport(const TimeUtil& endTime);
 
@@ -37,7 +38,7 @@ public:
 
     std::vector<Table> getTableStatus() const;
 
-    std::string getNextInQueue() const;
+    std::string getNextInQueue();
 
     int getQueueSize() const;
 
@@ -48,7 +49,6 @@ private:
     std::queue<std::string> waitingQueue;
     std::unordered_map<std::string, int> clientTableMap;
 
-    // int roundUpToHour(int minutes) const;
 };
 
 #endif
