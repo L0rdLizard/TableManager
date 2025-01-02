@@ -11,12 +11,7 @@ public:
     struct Client {
         std::string name;
         bool isInside;
-        unsigned int tableID = 0;
-        // int totalTimeSpent;
-        // int totalPayment;
-
-        // Client(const std::string& name) 
-        //     : name(name), isInside(false), totalTimeSpent(0), totalPayment(0) {}
+        int tableID = 0;
 
         Client(const std::string& name) 
             : name(name), isInside(false) {}
@@ -32,13 +27,9 @@ public:
 
     void seatClient(const std::string& clientName, unsigned int tableID);
 
-    // int getClientTimeSpent(const std::string& clientName) const;
+    // std::unordered_set<Client> getAllClients() const;
 
-    // int getClientTotalPayment(const std::string& clientName) const;
-
-    // void updateClientTime(const std::string& clientName, const TimeUtil& startTime, const TimeUtil& endTime);
-
-    std::unordered_set<std::string> getAllClients() const;
+    std::vector<std::string> getAllClientNames() const;
 
     Client getClient(const std::string& clientName) const;
 

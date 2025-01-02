@@ -6,6 +6,7 @@
 #include <queue>
 #include <unordered_map>
 #include "../utils/TimeUtil.h"
+#include <functional>
 
 class TableManager {
 public:
@@ -35,6 +36,10 @@ public:
     bool isAnyFreeTable() const;
 
     std::vector<Table> getTableStatus() const;
+
+    std::string getNextInQueue() const;
+
+    int getQueueSize() const;
 
 private:
     int tableCount;
