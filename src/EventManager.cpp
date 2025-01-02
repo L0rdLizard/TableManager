@@ -116,9 +116,17 @@ void EventManager::processEvents() {
     for (const auto& event : events) {
         handleEvent(event);
     }
+
+    std::vector<std::string> sortedClients = clientManager->getAllClientNames();
+    for (const auto& client : sortedClients) {
+        if (clientManager->isClientInside(client)) {
+            tableManager->releaseTable(client, timeEnd);
+            logEvent(timeEnd, 11, client);
+        }
+    }
 }
 
-std::vector<Event> EventManager::getEventLog() const {
+std::vector<EventManager::Event> EventManager::getEventLog() const {
     return eventLog;
 }
 
@@ -170,6 +178,11 @@ void EventManager::handleClientWait(const Event& event) {
         return;
     }
 
+    if (tableManager->getQueueSize() > tableCount) {
+        clientManager->unregisterClient(event.clientName, event.time);
+        logEvent(event.time, 11, event.clientName);
+    }
+
     tableManager->addToQueue(event.clientName);
     logEvent(event.time, 3, event.clientName);
 }
@@ -182,7 +195,14 @@ void EventManager::handleClientLeave(const Event& event) {
 
     clientManager->unregisterClient(event.clientName, event.time);
     tableManager->releaseTable(event.clientName, event.time);
-    tableManager->processQueue(event.tableID, event.time);
+    // tableManager->processQueue(event.tableID, event.time);
 
     logEvent(event.time, 4, event.clientName);
+
+    std::string nextInQueue = tableManager->getNextInQueue();
+    if (nextInQueue != "") {
+        clientManager->seatClient(nextInQueue, event.tableID);
+        tableManager->occupyTable(nextInQueue, event.tableID, event.time);
+        logEvent(event.time, 12, nextInQueue, event.tableID);
+    }
 }
