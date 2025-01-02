@@ -30,6 +30,10 @@ public:
 
     void finalizeDailyReport(const TimeUtil& endTime);
 
+    bool isTableOccupied(int tableId) const;
+
+    bool isAnyFreeTable() const;
+
     std::vector<Table> getTableStatus() const;
 
 private:

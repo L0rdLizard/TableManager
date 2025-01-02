@@ -11,11 +11,15 @@ public:
     struct Client {
         std::string name;
         bool isInside;
-        int totalTimeSpent;
-        int totalPayment;
+        unsigned int tableID = 0;
+        // int totalTimeSpent;
+        // int totalPayment;
+
+        // Client(const std::string& name) 
+        //     : name(name), isInside(false), totalTimeSpent(0), totalPayment(0) {}
 
         Client(const std::string& name) 
-            : name(name), isInside(false), totalTimeSpent(0), totalPayment(0) {}
+            : name(name), isInside(false) {}
     };
 
     ClientManager();
@@ -26,13 +30,17 @@ public:
 
     bool unregisterClient(const std::string& clientName, const TimeUtil& departureTime);
 
-    int getClientTimeSpent(const std::string& clientName) const;
+    void seatClient(const std::string& clientName, unsigned int tableID);
 
-    int getClientTotalPayment(const std::string& clientName) const;
+    // int getClientTimeSpent(const std::string& clientName) const;
 
-    void updateClientTime(const std::string& clientName, const TimeUtil& startTime, const TimeUtil& endTime);
+    // int getClientTotalPayment(const std::string& clientName) const;
+
+    // void updateClientTime(const std::string& clientName, const TimeUtil& startTime, const TimeUtil& endTime);
 
     std::unordered_set<std::string> getAllClients() const;
+
+    Client getClient(const std::string& clientName) const;
 
 private:
     std::unordered_map<std::string, Client> clients;
