@@ -154,7 +154,7 @@ void EventManager::handleClientArrival(const Event& event) {
         return;
     }
 
-    clientManager->registerClient(event.clientName, event.time);
+    clientManager->registerClient(event.clientName);
     logEvent(event.time, 1, event.clientName);
 }
 
