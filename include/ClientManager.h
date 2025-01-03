@@ -14,6 +14,8 @@ public:
         bool isInside;
         int tableID = 0;
 
+        Client() : name(""), isInside(false), tableID(0) {}
+
         Client(const std::string& name) 
             : name(name), isInside(false) {}
     };
