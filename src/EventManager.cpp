@@ -15,12 +15,9 @@ EventManager::EventManager(const std::string& path) : filePath(path) {
 
     std::string line;
     std::getline(file, line);
-    std::cout << line << std::endl;
     tableCount = atoi(line.c_str());
 
     std::getline(file, line);
-    std::cout << line << std::endl;
-
     std::istringstream ss(line);
     std::string time_str1, time_str2;
     if (ss >> time_str1 >> time_str2) {
@@ -32,7 +29,6 @@ EventManager::EventManager(const std::string& path) : filePath(path) {
     }
 
     std::getline(file, line);
-    std::cout << line << std::endl;
     hourlyRate = atoi(line.c_str());
 
     tableManager = std::make_unique<TableManager>(tableCount, hourlyRate);
@@ -207,6 +203,7 @@ void EventManager::handleClientLeave(const Event& event) {
         return;
     }
 
+    int clientTable = clientManager->getClient(event.clientName).tableID;
     clientManager->unregisterClient(event.clientName, event.time);
     tableManager->releaseTable(event.clientName, event.time);
     // tableManager->processQueue(event.tableID, event.time);
@@ -215,6 +212,7 @@ void EventManager::handleClientLeave(const Event& event) {
     if (nextInQueue != "") {
         clientManager->seatClient(nextInQueue, event.tableID);
         tableManager->occupyTable(nextInQueue, event.tableID, event.time);
-        logEvent(event.time, 12, nextInQueue, event.tableID);
+
+        logEvent(event.time, 12, nextInQueue, clientTable);
     }
 }
