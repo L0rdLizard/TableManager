@@ -11,6 +11,7 @@ private:
 public:
     TimeUtil(const std::string& time);
     TimeUtil(int hour, int minute);
+    TimeUtil();
 
     bool operator<(const TimeUtil& other) const;
 

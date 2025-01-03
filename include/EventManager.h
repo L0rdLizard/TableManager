@@ -32,11 +32,11 @@ public:
     
     using EventHandler = std::function<void(const Event&)>;
 
-    EventManager(const std::string& configFilePath);
+    EventManager(const std::string& path);
 
     void registerEventHandlers();
 
-    bool loadEvents(const std::string& filePath);
+    bool loadEvents();
 
     void processEvents();
 
@@ -46,13 +46,16 @@ public:
 
 private:
     // TableManager& tableManager;
+    std::string filePath;
     std::unique_ptr<TableManager> tableManager{nullptr};
     std::unique_ptr<ClientManager> clientManager{nullptr};
 
     unsigned int tableCount = 0;
     unsigned int hourlyRate = 0;
-    TimeUtil timeStart = TimeUtil{nullptr};
-    TimeUtil timeEnd = TimeUtil{nullptr};
+    // TimeUtil timeStart = TimeUtil{nullptr};
+    // TimeUtil timeEnd = TimeUtil{nullptr};
+    TimeUtil timeStart = TimeUtil();
+    TimeUtil timeEnd = TimeUtil();
 
     std::unordered_map<EventType, EventHandler> eventHandlers;
     std::vector<Event> events;

@@ -22,6 +22,8 @@ TimeUtil::TimeUtil(int hour, int minute) : hour(hour), minute(minute) {
     }
 }
 
+TimeUtil::TimeUtil() : hour(0), minute(0) {}
+
 bool TimeUtil::operator<(const TimeUtil& other) const {
     if (hour < other.hour) {
         return true;
