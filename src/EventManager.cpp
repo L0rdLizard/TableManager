@@ -6,6 +6,7 @@
 #include <stdexcept>
 
 EventManager::EventManager(const std::string& path) : filePath(path) {
+    registerEventHandlers();
     std::ifstream file(filePath);
     if (!file.is_open()) {
         std::cerr << "Failed to open file: " << filePath << std::endl;
@@ -138,8 +139,14 @@ std::vector<EventManager::Event> EventManager::getEventLog() const {
 
 void EventManager::printEventLog() const {
     for (const auto& event : eventLog) {
-        std::cout << event.time << " " << static_cast<int>(event.id) <<
-        " " << event.clientName << " " << event.tableID << std::endl;
+        std::cout << event.time << " " << static_cast<int>(event.id) 
+            << " " << event.clientName;
+
+        if (event.tableID != 0) {
+            std::cout << " " << event.tableID;
+        }
+
+        std::cout << std::endl;
     }
 }
 
@@ -148,6 +155,7 @@ void EventManager::logEvent(const TimeUtil& time, int id, const std::string& dat
 }
 
 void EventManager::handleClientArrival(const Event& event) {
+    logEvent(event.time, 1, event.clientName);
     if (clientManager->isClientInside(event.clientName)) {
         logEvent(event.time, 13, "YouShallNotPass");
         return;
@@ -159,10 +167,10 @@ void EventManager::handleClientArrival(const Event& event) {
     }
 
     clientManager->registerClient(event.clientName);
-    logEvent(event.time, 1, event.clientName);
 }
 
 void EventManager::handleClientSeat(const Event& event) {
+    logEvent(event.time, 2, event.clientName, event.tableID);
     if ( tableManager->isTableOccupied(event.tableID) ) {
         logEvent(event.time, 13, "PlaceIsBusy");
         return;
@@ -175,10 +183,10 @@ void EventManager::handleClientSeat(const Event& event) {
 
     tableManager->occupyTable(event.clientName, event.tableID, event.time);
     clientManager->seatClient(event.clientName, event.tableID);
-    logEvent(event.time, 2, event.clientName, event.tableID);
 }
 
 void EventManager::handleClientWait(const Event& event) {
+    logEvent(event.time, 3, event.clientName);
     if (tableManager->isAnyFreeTable()) {
         logEvent(event.time, 13, "ICanWaitNoLonger!");
         return;
@@ -190,10 +198,10 @@ void EventManager::handleClientWait(const Event& event) {
     }
 
     tableManager->addToQueue(event.clientName);
-    logEvent(event.time, 3, event.clientName);
 }
 
 void EventManager::handleClientLeave(const Event& event) {
+    logEvent(event.time, 4, event.clientName);
     if ( !clientManager->isClientInside(event.clientName) ) {
         logEvent(event.time, 13, "ClientUnknown");
         return;
@@ -202,8 +210,6 @@ void EventManager::handleClientLeave(const Event& event) {
     clientManager->unregisterClient(event.clientName, event.time);
     tableManager->releaseTable(event.clientName, event.time);
     // tableManager->processQueue(event.tableID, event.time);
-
-    logEvent(event.time, 4, event.clientName);
 
     std::string nextInQueue = tableManager->getNextInQueue();
     if (nextInQueue != "") {
