@@ -42,6 +42,8 @@ public:
 
     int getQueueSize() const;
 
+    ~TableManager();
+
 private:
     int tableCount;
     int hourlyRate;
