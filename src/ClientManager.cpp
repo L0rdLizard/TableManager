@@ -10,6 +10,7 @@ bool ClientManager::isClientInside(const std::string& clientName) const {
 
 void ClientManager::registerClient(const std::string& clientName) {
     clients[clientName] = Client(clientName);
+    clients[clientName].isInside = true;
 }
 
 void ClientManager::unregisterClient(const std::string& clientName, const TimeUtil& departureTime) {
