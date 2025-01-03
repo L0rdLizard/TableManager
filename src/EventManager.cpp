@@ -187,6 +187,10 @@ void EventManager::handleClientSeat(const Event& event) {
         return;
     }
 
+    if ( clientManager->getClient(event.clientName).tableID != 0 ) {
+        tableManager->releaseTable(event.clientName, event.time);
+    }
+
     tableManager->occupyTable(event.clientName, event.tableID, event.time);
     clientManager->seatClient(event.clientName, event.tableID);
 }
