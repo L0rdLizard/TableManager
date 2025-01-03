@@ -134,6 +134,7 @@ std::vector<EventManager::Event> EventManager::getEventLog() const {
 }
 
 void EventManager::printEventLog() const {
+    std::cout << timeStart << std::endl;
     for (const auto& event : eventLog) {
         std::cout << event.time << " " << static_cast<int>(event.id) 
             << " " << event.clientName;
@@ -143,6 +144,15 @@ void EventManager::printEventLog() const {
         }
 
         std::cout << std::endl;
+    }
+    std::cout << timeEnd << std::endl;
+    printBilling();
+}
+
+void EventManager::printBilling() const{
+    std::vector<TableManager::Table> tables = tableManager->getTables();
+    for (const auto& table : tables) {
+        std::cout << table.id << " " << table.revenue << " " << table.totalTime << std::endl;
     }
 }
 
@@ -210,8 +220,8 @@ void EventManager::handleClientLeave(const Event& event) {
 
     std::string nextInQueue = tableManager->getNextInQueue();
     if (nextInQueue != "") {
-        clientManager->seatClient(nextInQueue, event.tableID);
-        tableManager->occupyTable(nextInQueue, event.tableID, event.time);
+        tableManager->occupyTable(nextInQueue, clientTable, event.time);
+        clientManager->seatClient(nextInQueue, clientTable);
 
         logEvent(event.time, 12, nextInQueue, clientTable);
     }

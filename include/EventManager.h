@@ -68,6 +68,8 @@ private:
     void handleClientWait(const Event& event);
     void handleClientLeave(const Event& event);
 
+    void printBilling() const;
+
     void logEvent(const TimeUtil& time, int id, const std::string& data, unsigned int table = 0);
 };
 
