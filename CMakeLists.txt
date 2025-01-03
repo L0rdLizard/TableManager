@@ -22,6 +22,7 @@ add_executable(TableManager
     src/ClientManager.cpp
     src/TableManager.cpp
     src/EventManager.cpp
+    utils/TimeUtil.cpp
 )
 
 # enable_testing()
