@@ -29,6 +29,7 @@ bool TableManager::releaseTable(const std::string& clientName, const TimeUtil& c
         table.occupiedBy = "";
 
         table.revenue += (currentTime - table.occupiedSince).getRoundTime() * hourlyRate;
+        table.totalTime = table.totalTime + (currentTime - table.occupiedSince);
 
         table.occupiedSince = TimeUtil(0, 0);
         clientTableMap.erase(it);
@@ -88,6 +89,10 @@ std::string TableManager::getNextInQueue() {
 
 int TableManager::getQueueSize() const {
     return waitingQueue.size();
+}
+
+std::vector<TableManager::Table> TableManager::getTables() const {
+    return tables;
 }
 
 TableManager::~TableManager() {}

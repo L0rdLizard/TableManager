@@ -16,8 +16,9 @@ public:
         std::string occupiedBy;
         int revenue;
         TimeUtil occupiedSince;
+        TimeUtil totalTime;
 
-        Table() : id(0), isOccupied(false), occupiedBy(""), revenue(0), occupiedSince(TimeUtil(0, 0)) {}
+        Table() : id(0), isOccupied(false), occupiedBy(""), revenue(0), occupiedSince(TimeUtil(0, 0)), totalTime(TimeUtil(0, 0) ) {}
     };
 
     TableManager(int tableCount, int hourlyRate);
@@ -41,6 +42,8 @@ public:
     std::string getNextInQueue();
 
     int getQueueSize() const;
+
+    std::vector<Table> getTables() const;
 
     ~TableManager();
 
