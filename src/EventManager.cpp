@@ -5,7 +5,7 @@
 #include <vector>
 #include <stdexcept>
 
-EventManager::EventManager(const std::string& filePath) {
+EventManager::EventManager(const std::string& path) : filePath(path) {
     std::ifstream file(filePath);
     if (!file.is_open()) {
         std::cerr << "Failed to open file: " << filePath << std::endl;
@@ -14,9 +14,12 @@ EventManager::EventManager(const std::string& filePath) {
 
     std::string line;
     std::getline(file, line);
+    std::cout << line << std::endl;
     tableCount = atoi(line.c_str());
 
     std::getline(file, line);
+    std::cout << line << std::endl;
+
     std::istringstream ss(line);
     std::string time_str1, time_str2;
     if (ss >> time_str1 >> time_str2) {
@@ -28,6 +31,7 @@ EventManager::EventManager(const std::string& filePath) {
     }
 
     std::getline(file, line);
+    std::cout << line << std::endl;
     hourlyRate = atoi(line.c_str());
 
     tableManager = std::make_unique<TableManager>(tableCount, hourlyRate);
@@ -39,7 +43,7 @@ bool isValidEventType(int id) {
     return (id >= 1 && id <= 4) || id == 11 || id == 12 || id == 13;
 }
 
-bool EventManager::loadEvents(const std::string& filePath) {
+bool EventManager::loadEvents() {
     std::ifstream file(filePath);
     if (!file.is_open()) {
         std::cerr << "Failed to open file: " << filePath << std::endl;
