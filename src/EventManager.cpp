@@ -252,7 +252,6 @@ void EventManager::handleClientLeave(const Event& event) {
     int clientTable = clientManager->getClient(event.clientName).tableID;
     clientManager->unregisterClient(event.clientName, event.time);
     tableManager->releaseTable(event.clientName, event.time);
-    // tableManager->processQueue(event.tableID, event.time);
 
     std::string nextInQueue = tableManager->getNextInQueue();
     if (nextInQueue != "") {

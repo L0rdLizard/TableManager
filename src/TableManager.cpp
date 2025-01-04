@@ -42,20 +42,6 @@ void TableManager::addToQueue(const std::string& clientName){
     waitingQueue.push(clientName);
 }
 
-// bool TableManager::processQueue(int tableId, const TimeUtil& currentTime){
-//     if (tableId < 1 || tableId > tableCount) return false;
-
-//     Table& table = tables[tableId - 1];
-//     if (!table.isOccupied) {
-//         if (!waitingQueue.empty()) {
-//             std::string clientName = waitingQueue.front();
-//             waitingQueue.pop();
-//             return occupyTable(clientName, tableId, currentTime);
-//         }
-//     }
-//     return false;
-// }
-
 void TableManager::finalizeDailyReport(const TimeUtil& endTime){
     for (Table& table : tables) {
         if (table.isOccupied) {
