@@ -33,8 +33,9 @@ EventManager::EventManager(const std::string& path) : filePath(path) {
 
     tableManager = std::make_unique<TableManager>(tableCount, hourlyRate);
     clientManager = std::make_unique<ClientManager>();
-}
 
+    file.close();
+}
 
 bool isValidEventType(int id) {
     return (id >= 1 && id <= 4) || id == 11 || id == 12 || id == 13;
@@ -109,7 +110,9 @@ void EventManager::handleEvent(const Event& event) {
     if (handler != eventHandlers.end()) {
         handler->second(event);
     } else {
-        std::cerr << "Unknown event type: " << static_cast<int>(event.id) << std::endl;
+        std::cerr << "Invalid event format (unknown event type): "  << event.time 
+            << " " << static_cast<int>(event.id) << " " << event.clientName;
+        exit(1);
     }
 }
 
