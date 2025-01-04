@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include "ClientManager.h"
 
 ClientManager::ClientManager() {}
@@ -28,6 +29,9 @@ std::vector<std::string> ClientManager::getAllClientNames() const {
     for (const auto& client : clients) {
         names.push_back(client.first);
     }
+
+    std::sort(names.begin(), names.end());
+
     return names;
 }
 
