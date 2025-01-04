@@ -27,32 +27,36 @@ add_executable(TableManager
 
 target_include_directories(TableManager PUBLIC "${CMAKE_SOURCE_DIR}/include")
 
-# enable_testing()
-# add_executable(TapeDeviceTests
-#     tests/TapeDeviceTests.cpp
-#     src/TapeDevice.cpp
-#     src/utils/FileUtils.cpp
-#     src/Config.cpp
-# )
-# target_link_libraries(
-#     TapeDeviceTests
-#     GTest::gtest_main
-# )
+enable_testing()
 
-# add_executable(TapeSorterTests
-#     tests/TapeSorterTests.cpp
-#     src/TapeSorter.cpp
-#     src/TapeDevice.cpp
-#     src/utils/FileUtils.cpp
-#     src/Config.cpp
-#     src/utils/TimeManager.cpp
-#     src/TempTapeDevice.cpp
-# )
-# target_link_libraries(
-#     TapeSorterTests
-#     GTest::gtest_main
-# )
+add_executable(EventManagerTests
+    tests/EventManagerTests.cpp
+    src/ClientManager.cpp
+    src/TableManager.cpp
+    src/EventManager.cpp
+    utils/TimeUtil.cpp
+)
+target_link_libraries(EventManagerTests
+    GTest::gtest_main
+)
 
-# include(GoogleTest)
-# gtest_discover_tests(TapeDeviceTests)
-# gtest_discover_tests(TapeSorterTests)
+add_executable(ClientManagerTests
+    src/ClientManager.cpp
+    utils/TimeUtil.cpp
+)
+target_link_libraries(ClientManagerTests
+    GTest::gtest_main
+)
+
+add_executable(TableManagerTests
+    src/TableManager.cpp
+    utils/TimeUtil.cpp
+)
+target_link_libraries(TableManagerTests
+    GTest::gtest_main
+)
+
+include(GoogleTest)
+gtest_discover_tests(EventManagerTests)
+gtest_discover_tests(ClientManagerTests)
+gtest_discover_tests(TableManagerTests)
