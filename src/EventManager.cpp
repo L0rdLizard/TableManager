@@ -1,4 +1,4 @@
-#include "../include/EventManager.h"
+#include "EventManager.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -158,6 +158,38 @@ void EventManager::printBilling() const{
 
 void EventManager::logEvent(const TimeUtil& time, int id, const std::string& data, unsigned int table) {
     eventLog.emplace_back(Event(time, static_cast<EventType>(id), data, table));
+}
+
+void EventManager::printEventLogToFile() const {
+    size_t inputPos = filePath.find("/input/");
+    std::string outputPath = filePath;
+    outputPath.replace(inputPos, 7, "/output/");
+
+    size_t dotPos = outputPath.rfind(".txt");
+    if (dotPos != std::string::npos) {
+        outputPath.replace(dotPos, 4, "_report.txt");\
+    }
+
+    std::ofstream file(outputPath);
+    if (file.is_open()) {
+        file << timeStart << std::endl;
+        for (const auto& event : eventLog) {
+            file << event.time << " " << static_cast<int>(event.id) << " " << event.clientName;
+            if (event.tableID != 0) {
+                file << " " << event.tableID;
+            }
+            file << std::endl;
+        }
+        file << timeEnd << std::endl;
+        std::vector<TableManager::Table> tables = tableManager->getTables();
+        for (const auto& table : tables) {
+            file << table.id << " " << table.revenue << " " << table.totalTime << std::endl;
+        }
+        file.close();
+    }
+    else {
+        std::cerr << "Failed to open file: " << outputPath << std::endl;
+    }
 }
 
 void EventManager::handleClientArrival(const Event& event) {
