@@ -1,4 +1,4 @@
-#include "../include/TableManager.h"
+#include "TableManager.h"
 
 TableManager::TableManager(int tableCount, int hourlyRate) : tableCount(tableCount), hourlyRate(hourlyRate) {
     for (int i = 0; i < tableCount; i++) {
