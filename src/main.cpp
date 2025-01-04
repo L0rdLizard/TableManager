@@ -1,11 +1,21 @@
-#include "../include/EventManager.h"
+#include "EventManager.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) {
-    std::string path = "../input/day1.txt";
-    EventManager eventManager(path);
+    if (argc < 2) {
+        std::cerr << "Error: Wrong number of arguments!" << std::endl;
+        return 1;
+    }
+
+    std::string relativePath = argv[1];
+
+    std::string currentDir = "../input/";
+    std::string fullPath = currentDir + relativePath;
+
+    EventManager eventManager(fullPath);
     eventManager.loadEvents();
     eventManager.processEvents();
     eventManager.printEventLog();
+    eventManager.printEventLogToFile();
     return 0;
 }
