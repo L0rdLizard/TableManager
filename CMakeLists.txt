@@ -25,6 +25,8 @@ add_executable(TableManager
     utils/TimeUtil.cpp
 )
 
+target_include_directories(TableManager PUBLIC "${CMAKE_SOURCE_DIR}/include")
+
 # enable_testing()
 # add_executable(TapeDeviceTests
 #     tests/TapeDeviceTests.cpp
