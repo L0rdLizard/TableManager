@@ -44,6 +44,8 @@ public:
 
     void printEventLog() const;
 
+    void printEventLogToFile() const;
+
 private:
     // TableManager& tableManager;
     std::string filePath;
