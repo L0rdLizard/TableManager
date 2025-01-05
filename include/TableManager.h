@@ -23,29 +23,29 @@ public:
 
     TableManager(int tableCount, int hourlyRate);
 
-    bool occupyTable(const std::string& clientName, int tableId, const TimeUtil& currentTime);
+    virtual bool occupyTable(const std::string& clientName, int tableId, const TimeUtil& currentTime);
 
-    bool releaseTable(const std::string& clientName, const TimeUtil& currentTime);
+    virtual bool releaseTable(const std::string& clientName, const TimeUtil& currentTime);
 
-    void addToQueue(const std::string& clientName);
+    virtual void addToQueue(const std::string& clientName);
 
     // bool processQueue(int tableId, const TimeUtil& currentTime);
 
-    void finalizeDailyReport(const TimeUtil& endTime);
+    virtual void finalizeDailyReport(const TimeUtil& endTime);
 
-    bool isTableOccupied(int tableId) const;
+    virtual bool isTableOccupied(int tableId) const;
 
-    bool isAnyFreeTable() const;
+    virtual bool isAnyFreeTable() const;
 
-    std::vector<Table> getTableStatus() const;
+    virtual std::vector<Table> getTableStatus() const;
 
-    std::string getNextInQueue();
+    virtual std::string getNextInQueue();
 
-    int getQueueSize() const;
+    virtual int getQueueSize() const;
 
-    std::vector<Table> getTables() const;
+    virtual std::vector<Table> getTables() const;
 
-    ~TableManager();
+    virtual ~TableManager() = default;
 
 private:
     int tableCount;

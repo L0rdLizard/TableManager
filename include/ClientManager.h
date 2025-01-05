@@ -22,19 +22,21 @@ public:
 
     ClientManager();
 
-    bool isClientInside(const std::string& clientName) const;
+    virtual bool isClientInside(const std::string& clientName) const;
 
-    void registerClient(const std::string& clientName);
+    virtual void registerClient(const std::string& clientName);
 
-    void unregisterClient(const std::string& clientName, const TimeUtil& departureTime);
+    virtual void unregisterClient(const std::string& clientName, const TimeUtil& departureTime);
 
-    void seatClient(const std::string& clientName, unsigned int tableID);
+    virtual void seatClient(const std::string& clientName, unsigned int tableID);
 
     // std::unordered_set<Client> getAllClients() const;
 
-    std::vector<std::string> getAllClientNames() const;
+    virtual std::vector<std::string> getAllClientNames() const;
 
-    Client getClient(const std::string& clientName) const;
+    virtual Client getClient(const std::string& clientName) const;
+
+    virtual ~ClientManager() = default;
 
 private:
     std::unordered_map<std::string, Client> clients;

@@ -17,6 +17,7 @@ FetchContent_MakeAvailable(googletest)
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/mocks)
+include_directories(${CMAKE_SOURCE_DIR}/include)
 
 add_executable(TableManager
     src/main.cpp
