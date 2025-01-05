@@ -34,9 +34,13 @@ public:
 
     EventManager(const std::string& path);
 
+    EventManager(const std::string& path, TableManager* tableManager, ClientManager* clientManager, 
+            int tableCount, int hourlyRate, const TimeUtil& start, const TimeUtil& end);
+
     void registerEventHandlers();
 
-    bool loadEvents();
+    std::vector<std::string> readLinesFromFile() const;
+    bool loadEvents(const std::vector<std::string>& eventLines);
 
     void processEvents();
 
@@ -47,15 +51,13 @@ public:
     void printEventLogToFile() const;
 
 private:
-    // TableManager& tableManager;
     std::string filePath;
     std::unique_ptr<TableManager> tableManager{nullptr};
     std::unique_ptr<ClientManager> clientManager{nullptr};
 
     unsigned int tableCount = 0;
     unsigned int hourlyRate = 0;
-    // TimeUtil timeStart = TimeUtil{nullptr};
-    // TimeUtil timeEnd = TimeUtil{nullptr};
+
     TimeUtil timeStart = TimeUtil();
     TimeUtil timeEnd = TimeUtil();
 

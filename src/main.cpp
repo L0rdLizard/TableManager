@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
     std::string fullPath = currentDir + relativePath;
 
     EventManager eventManager(fullPath);
-    eventManager.loadEvents();
+    eventManager.loadEvents(eventManager.readLinesFromFile());
     eventManager.processEvents();
     eventManager.printEventLog();
     eventManager.printEventLogToFile();
