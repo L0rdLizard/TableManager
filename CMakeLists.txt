@@ -16,6 +16,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/mocks)
 
 add_executable(TableManager
     src/main.cpp
@@ -31,13 +32,15 @@ enable_testing()
 
 add_executable(EventManagerTests
     tests/EventManagerTests.cpp
+    mocks/MockClientManager.h
+    mocks/MockTableManager.h
     src/ClientManager.cpp
     src/TableManager.cpp
     src/EventManager.cpp
     utils/TimeUtil.cpp
 )
 target_link_libraries(EventManagerTests
-    GTest::gtest_main
+    GTest::gmock_main
 )
 
 add_executable(ClientManagerTests
