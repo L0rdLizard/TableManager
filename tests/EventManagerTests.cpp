@@ -57,6 +57,48 @@ TEST(EventManagerTest, TestLoadEvents) {
     // };
 
     bool result = eventManager.loadEvents(eventLines);
-    std::cout << result;
     EXPECT_TRUE( result );
+}
+
+TEST (EventManagerTest, TestProcessEvents) {
+        int tableCount = 3;
+    int hourlyRate = 10;
+    TimeUtil startTime(9, 0);
+    TimeUtil endTime(19, 0);
+
+    MockTableManager* mockTableManager = new MockTableManager(tableCount, hourlyRate);
+    MockClientManager* mockClientManager = new MockClientManager();
+
+    EventManager eventManager(
+        "test_file.txt",
+        mockTableManager,
+        mockClientManager,
+        tableCount, 
+        hourlyRate, 
+        startTime, 
+        endTime
+    );
+
+    std::vector<std::string> eventLines = {
+        "3",
+        "09:00 19:00",
+        "10",
+        "08:41 1 client1",
+    };
+
+    EXPECT_CALL(*mockClientManager, isClientInside(testing::_))
+    .WillOnce(testing::Return(false));
+
+    EXPECT_CALL(*mockTableManager, finalizeDailyReport(testing::Eq(endTime)));
+
+    EXPECT_CALL(*mockClientManager, getAllClientNames())
+        .WillOnce(testing::Return(std::vector<std::string>{}));
+
+    bool result = eventManager.loadEvents(eventLines);
+    eventManager.processEvents();
+    std::vector<EventManager::Event> eventLog = eventManager.getEventLog();
+
+    int eventType = static_cast<int>(eventLog.back().id);
+
+    EXPECT_EQ( eventType, 13 );
 }
