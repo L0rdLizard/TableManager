@@ -138,13 +138,14 @@ void EventManager::processEvents() {
     }
 
     std::vector<std::string> sortedClients = clientManager->getAllClientNames();
-    for (const auto& client : sortedClients) {
-        if (clientManager->isClientInside(client)) {
-            tableManager->releaseTable(client, timeEnd);
-            logEvent(timeEnd, 11, client);
+    if ( sortedClients.size() > 0 ) {
+        for (const auto& client : sortedClients) {
+            if (clientManager->isClientInside(client)) {
+                tableManager->releaseTable(client, timeEnd);
+                logEvent(timeEnd, 11, client);
+            }
         }
     }
-
     tableManager->finalizeDailyReport(timeEnd);
 }
 
