@@ -81,4 +81,4 @@ std::vector<TableManager::Table> TableManager::getTables() const {
     return tables;
 }
 
-TableManager::~TableManager() {}
+// TableManager::~TableManager() {}
