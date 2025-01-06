@@ -13,7 +13,9 @@ int main(int argc, char* argv[]) {
     std::string fullPath = currentDir + relativePath;
 
     EventManager eventManager(fullPath);
-    eventManager.loadEvents(eventManager.readLinesFromFile());
+    if ( !eventManager.loadEvents(eventManager.readLinesFromFile()) ) {
+        return 1;
+    }
     eventManager.processEvents();
     eventManager.printEventLog();
     eventManager.printEventLogToFile();
