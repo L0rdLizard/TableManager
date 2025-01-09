@@ -138,6 +138,11 @@ bool EventManager::loadEvents(const std::vector<std::string>& eventLines) {
                 return false;
             }
             
+            if ((!events.empty() && time < events.back().time) || time > timeEnd) {
+                std::cerr << "Invalid event format (invalid time): " << std::endl << line << std::endl;
+                return false;
+            }
+
             if (event_id == 2) {
                 int table_id = std::stoi(tokens[3]);
                 if (table_id < 1 || table_id > tableCount) {
