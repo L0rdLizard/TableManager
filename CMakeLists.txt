@@ -54,6 +54,7 @@ target_link_libraries(ClientManagerTests
 )
 
 add_executable(TableManagerTests
+    tests/TableManagerTests.cpp
     src/TableManager.cpp
     utils/TimeUtil.cpp
 )
