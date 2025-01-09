@@ -301,7 +301,6 @@ void EventManager::handleClientWait(const Event& event) {
         return;
     }
 
-    std::cout << "Queue size: " << tableManager->getQueueSize() << std::endl;
     if (tableManager->getQueueSize() >= tableCount) {
         clientManager->unregisterClient(event.clientName, event.time);
         logEvent(event.time, 11, event.clientName);
