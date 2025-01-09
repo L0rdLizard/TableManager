@@ -7,8 +7,8 @@ TableManager::TableManager(int tableCount, int hourlyRate) : tableCount(tableCou
     }
 }
 
-bool TableManager::occupyTable(const std::string& clientName, int tableId, const TimeUtil& currentTime){
-    if (tableId < 1 || tableId > tableCount) return false;
+void TableManager::occupyTable(const std::string& clientName, int tableId, const TimeUtil& currentTime){
+    // if (tableId < 1 || tableId > tableCount) return false;
 
     Table& table = tables[tableId - 1];
     table.isOccupied = true;
@@ -16,11 +16,9 @@ bool TableManager::occupyTable(const std::string& clientName, int tableId, const
     table.occupiedSince = currentTime;
 
     clientTableMap[clientName] = tableId;
-
-    return true;
 }
 
-bool TableManager::releaseTable(const std::string& clientName, const TimeUtil& currentTime){
+void TableManager::releaseTable(const std::string& clientName, const TimeUtil& currentTime){
     auto it = clientTableMap.find(clientName);
     if (it != clientTableMap.end()) {
         int tableId = it->second;
@@ -33,9 +31,7 @@ bool TableManager::releaseTable(const std::string& clientName, const TimeUtil& c
 
         table.occupiedSince = TimeUtil(0, 0);
         clientTableMap.erase(it);
-        return true;
     }
-    return false;
 }
 
 void TableManager::addToQueue(const std::string& clientName){

@@ -23,13 +23,11 @@ public:
 
     TableManager(int tableCount, int hourlyRate);
 
-    virtual bool occupyTable(const std::string& clientName, int tableId, const TimeUtil& currentTime);
+    virtual void occupyTable(const std::string& clientName, int tableId, const TimeUtil& currentTime);
 
-    virtual bool releaseTable(const std::string& clientName, const TimeUtil& currentTime);
+    virtual void releaseTable(const std::string& clientName, const TimeUtil& currentTime);
 
     virtual void addToQueue(const std::string& clientName);
-
-    // bool processQueue(int tableId, const TimeUtil& currentTime);
 
     virtual void finalizeDailyReport(const TimeUtil& endTime);
 
