@@ -17,6 +17,7 @@ public:
 
     TimeUtil operator+(const TimeUtil& other) const;
     TimeUtil operator-(const TimeUtil& other) const;
+    TimeUtil& operator=(const TimeUtil& other);
 
     bool operator>(const TimeUtil& other) const { return other < *this; }
     bool operator<=(const TimeUtil& other) const { return !(other < *this); }

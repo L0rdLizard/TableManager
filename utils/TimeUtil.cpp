@@ -66,6 +66,12 @@ TimeUtil TimeUtil::operator-(const TimeUtil& other) const {
     return TimeUtil(newHour, newMinute);
 }
 
+TimeUtil& TimeUtil::operator=(const TimeUtil& other) {
+    hour = other.hour;
+    minute = other.minute;
+    return *this;
+}
+
 std::string TimeUtil::toString() const {
     return (hour < 10 ? "0" : "") + std::to_string(hour) + ":" +
         (minute < 10 ? "0" : "") + std::to_string(minute);
