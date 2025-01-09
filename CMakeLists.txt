@@ -45,6 +45,7 @@ target_link_libraries(EventManagerTests
 )
 
 add_executable(ClientManagerTests
+    tests/ClientManagerTests.cpp
     src/ClientManager.cpp
     utils/TimeUtil.cpp
 )
