@@ -91,9 +91,8 @@ TEST (EventManagerTest, TestProcessEvents) {
     EXPECT_EQ( eventType, 4 );
 }
 
-
 TEST (EventManagerTest, TestProcessEventsError) {
-        int tableCount = 3;
+    int tableCount = 3;
     int hourlyRate = 10;
     TimeUtil startTime(9, 0);
     TimeUtil endTime(19, 0);
