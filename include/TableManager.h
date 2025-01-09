@@ -35,7 +35,7 @@ public:
 
     virtual bool isAnyFreeTable() const;
 
-    virtual std::vector<Table> getTableStatus() const;
+    virtual Table getTable(int tableId) const;
 
     virtual std::string getNextInQueue();
 

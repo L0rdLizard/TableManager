@@ -58,8 +58,9 @@ bool TableManager::isAnyFreeTable() const {
     return false;
 }
 
-std::vector<TableManager::Table> TableManager::getTableStatus() const {
-    return tables;
+TableManager::Table TableManager::getTable(int tableId) const {
+    if (tableId < 1 || tableId > tableCount) return Table();
+    return tables[tableId - 1];
 }
 
 std::string TableManager::getNextInQueue() {

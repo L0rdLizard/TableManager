@@ -15,7 +15,7 @@ public:
     MOCK_METHOD(void, finalizeDailyReport, (const TimeUtil& endTime), (override));
     MOCK_METHOD(bool, isTableOccupied, (int tableId), (const, override));
     MOCK_METHOD(bool, isAnyFreeTable, (), (const, override));
-    MOCK_METHOD(std::vector<Table>, getTableStatus, (), (const, override));
+    MOCK_METHOD(Table, getTable, (int tableId), (const, override));
     MOCK_METHOD(std::string, getNextInQueue, (), (override));
     MOCK_METHOD(int, getQueueSize, (), (const, override));
     MOCK_METHOD(std::vector<Table>, getTables, (), (const, override));
