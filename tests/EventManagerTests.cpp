@@ -36,7 +36,7 @@ TEST(EventManagerTest, TestLoadEvents) {
 }
 
 TEST (EventManagerTest, TestProcessEvents) {
-        int tableCount = 3;
+    int tableCount = 3;
     int hourlyRate = 10;
     TimeUtil startTime(9, 0);
     TimeUtil endTime(19, 0);
@@ -55,7 +55,10 @@ TEST (EventManagerTest, TestProcessEvents) {
 
     EXPECT_CALL(*mockClientManager, registerClient(testing::_));
 
-    EXPECT_CALL(*mockClientManager, getClient(testing::_));
+    ClientManager::Client expectedClient;
+    expectedClient.tableID = 1;
+    EXPECT_CALL(*mockClientManager, getClient(testing::_))
+        .WillOnce(testing::Return(expectedClient));
 
     EXPECT_CALL(*mockClientManager, unregisterClient(testing::_, testing::_));
 
