@@ -55,8 +55,8 @@ private:
     std::unique_ptr<TableManager> tableManager{nullptr};
     std::unique_ptr<ClientManager> clientManager{nullptr};
 
-    unsigned int tableCount = 0;
-    unsigned int hourlyRate = 0;
+    int tableCount = 0;
+    int hourlyRate = 0;
 
     TimeUtil timeStart = TimeUtil();
     TimeUtil timeEnd = TimeUtil();

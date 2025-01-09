@@ -15,7 +15,17 @@ EventManager::EventManager(const std::string& path) : filePath(path) {
 
     std::string line;
     std::getline(file, line);
-    tableCount = atoi(line.c_str());
+    try {
+        tableCount = std::stoi(line);
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "Invalid table count: " << line << std::endl;
+        exit(1);
+    }
+
+    if (tableCount < 0) {
+        std::cerr << "Invalid table count: " << line << std::endl;
+        exit(1);
+    }
 
     std::getline(file, line);
     std::istringstream ss(line);
@@ -29,7 +39,17 @@ EventManager::EventManager(const std::string& path) : filePath(path) {
     }
 
     std::getline(file, line);
-    hourlyRate = atoi(line.c_str());
+    try {
+        hourlyRate = std::stoi(line);
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "Invalid hourly rate: " << line << std::endl;
+        exit(1);
+    }
+
+    if (hourlyRate < 0) {
+        std::cerr << "Invalid hourly rate: " << line << std::endl;
+        exit(1);
+    }
 
     tableManager = std::make_unique<TableManager>(tableCount, hourlyRate);
     clientManager = std::make_unique<ClientManager>();
