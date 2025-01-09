@@ -41,15 +41,14 @@ Example:
 
 ## Running Tests
 
-
-### 1. Build the tests
-```
-cmake --build . --target tests
-```
-
-### 2. Run all tests
+### 1. Run all tests
 ```
 ctest
+```
+
+### 2. Run with additional info
+```
+ctest --verbose
 ```
 
 ### 3. Run specific tests
@@ -59,13 +58,13 @@ ctest -R <testName>
 
 Tests:
 ```
-EventManagerTests
+EventManagerTest
 ```
 
 ```
-ClientManagerTests
+ClientManagerTest
 ```
 
 ```
-TableManagerTests
+TableManagerTest
 ```
