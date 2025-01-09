@@ -7,6 +7,8 @@ TableManager::TableManager(int tableCount, int hourlyRate) : tableCount(tableCou
     }
 }
 
+TableManager::TableManager() : tableCount(0), hourlyRate(0) {}
+
 void TableManager::occupyTable(const std::string& clientName, int tableId, const TimeUtil& currentTime){
     // if (tableId < 1 || tableId > tableCount) return false;
 

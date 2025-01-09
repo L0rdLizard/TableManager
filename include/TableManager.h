@@ -23,6 +23,8 @@ public:
 
     TableManager(int tableCount, int hourlyRate);
 
+    TableManager();
+
     virtual void occupyTable(const std::string& clientName, int tableId, const TimeUtil& currentTime);
 
     virtual void releaseTable(const std::string& clientName, const TimeUtil& currentTime);
