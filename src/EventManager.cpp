@@ -82,8 +82,22 @@ bool EventManager::loadEvents(const std::vector<std::string>& eventLines) {
         }
 
         try {
-            TimeUtil time(tokens[0]);
-            int event_id = std::stoi(tokens[1]);
+            TimeUtil time(0, 0);
+            try {
+                TimeUtil timeF(tokens[0]);
+                time = timeF;
+            } catch (const std::invalid_argument& e) {
+                std::cerr << "Invalid time format (invalid time format): " << std::endl << line << std::endl;
+                return false;
+            }
+            
+            int event_id = 0;
+            try {
+                event_id = std::stoi(tokens[1]);
+            } catch (const std::invalid_argument& e) {
+                std::cerr << "Invalid event format (invalid event type): " << std::endl << line << std::endl;
+                return false;
+            }
 
             if (!isValidEventType(event_id)) {
                 std::cerr << "Invalid event format (invalid event type): " << std::endl << line << std::endl;
@@ -97,6 +111,10 @@ bool EventManager::loadEvents(const std::vector<std::string>& eventLines) {
             
             if (event_id == 2) {
                 int table_id = std::stoi(tokens[3]);
+                if (table_id < 1 || table_id > tableCount) {
+                    std::cerr << "Invalid event format (invalid table ID): " << std::endl << line << std::endl;
+                    return false;
+                }
                 events.emplace_back(Event( time, static_cast<EventType>(event_id), tokens[2], table_id ));
             } else {
                 events.emplace_back(Event( time, static_cast<EventType>(event_id), tokens[2] ));
