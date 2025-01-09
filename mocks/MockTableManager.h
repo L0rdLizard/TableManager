@@ -9,8 +9,8 @@ public:
     MockTableManager(int tableCount, int hourlyRate) 
         : TableManager(tableCount, hourlyRate) {}
 
-    MOCK_METHOD(bool, occupyTable, (const std::string& clientName, int tableId, const TimeUtil& currentTime), (override));
-    MOCK_METHOD(bool, releaseTable, (const std::string& clientName, const TimeUtil& currentTime), (override));
+    MOCK_METHOD(void, occupyTable, (const std::string& clientName, int tableId, const TimeUtil& currentTime), (override));
+    MOCK_METHOD(void, releaseTable, (const std::string& clientName, const TimeUtil& currentTime), (override));
     MOCK_METHOD(void, addToQueue, (const std::string& clientName), (override));
     MOCK_METHOD(void, finalizeDailyReport, (const TimeUtil& endTime), (override));
     MOCK_METHOD(bool, isTableOccupied, (int tableId), (const, override));
