@@ -31,9 +31,18 @@ EventManager::EventManager(const std::string& path) : filePath(path) {
     std::istringstream ss(line);
     std::string time_str1, time_str2;
     if (ss >> time_str1 >> time_str2) {
-        timeStart = TimeUtil(time_str1);
-        timeEnd = TimeUtil(time_str2);
+        try {
+            timeStart = TimeUtil(time_str1);
+            timeEnd = TimeUtil(time_str2);
+        } catch (const std::invalid_argument& e) {
+            std::cerr << "Invalid time format: " << line << std::endl;
+            exit(1);
+        }
     } else {
+        std::cerr << "Invalid time format: " << line << std::endl;
+        exit(1);
+    }
+    if (timeStart > timeEnd) {
         std::cerr << "Invalid time format: " << line << std::endl;
         exit(1);
     }
@@ -292,7 +301,8 @@ void EventManager::handleClientWait(const Event& event) {
         return;
     }
 
-    if (tableManager->getQueueSize() > tableCount) {
+    std::cout << "Queue size: " << tableManager->getQueueSize() << std::endl;
+    if (tableManager->getQueueSize() >= tableCount) {
         clientManager->unregisterClient(event.clientName, event.time);
         logEvent(event.time, 11, event.clientName);
     }
@@ -309,8 +319,9 @@ void EventManager::handleClientLeave(const Event& event) {
 
     int clientTable = clientManager->getClient(event.clientName).tableID;
     clientManager->unregisterClient(event.clientName, event.time);
-    tableManager->releaseTable(event.clientName, event.time);
-
+    if (clientTable != 0) {
+        tableManager->releaseTable(event.clientName, event.time);
+    }
     std::string nextInQueue = tableManager->getNextInQueue();
     if (nextInQueue != "") {
         tableManager->occupyTable(nextInQueue, clientTable, event.time);
