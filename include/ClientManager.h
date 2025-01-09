@@ -30,8 +30,6 @@ public:
 
     virtual void seatClient(const std::string& clientName, unsigned int tableID);
 
-    // std::unordered_set<Client> getAllClients() const;
-
     virtual std::vector<std::string> getAllClientNames() const;
 
     virtual Client getClient(const std::string& clientName) const;
