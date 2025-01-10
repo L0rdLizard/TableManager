@@ -10,6 +10,11 @@
 Лог программы всегда пишется в консоль, а также при успешном выполнении программы записывается в директорию output в качестве txt файла с припиской "_report", как отчёт за день.
 
 ## Getting started
+
+### Versions
+- CMake: version 3.12
+- C++17
+
 ### 1. Clone the repository
 ```
 git clone https://github.com/L0rdLizard/TableManager.git
